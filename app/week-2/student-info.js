@@ -4,8 +4,10 @@ import Link from 'next/link';
 export default function StudentInfo() {
   return (
     <div>
-      <h2>Huy Phat Huynh</h2>
-      <Link href="https://github.com/phathuy/cprg306-assignments">GitHub Repo</Link>
+      <h2>Name: Huy Phat Huynh</h2>
+      <p>
+        GitHub: <Link className="underline" href="https://github.com/phathuy/cprg306-assignments">phathuy/cprg306-assignments</Link>
+      </p>
     </div>
   );
 }

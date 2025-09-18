@@ -6,5 +6,5 @@ export default function Page() {
       <h1>Shopping Lists</h1>
       <StudentInfo />
     </main>
-      );
+    );
   };
