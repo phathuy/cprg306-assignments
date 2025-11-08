@@ -1,18 +1,8 @@
+"use client";
+
 // Import the useUserAuth hook
 import Link from "next/link";
 import { useUserAuth } from "../contexts/AuthContext";
-
-/**
- * This will be the landing page for our application.
- * Display a login button if the user is not logged in.
- * If the user is logged in, display a welcome message, a logout button,
- * and a link to the shopping list page.
- *
- * user is the user object returned from Firebase Authentication. If the user is not logged in, the value will be null.
- * gitHubSignIn is a function that will open a popup window to allow the user to sign in with GitHub.
- * firebaseSignOut is a function that will log the user out.
- *
- */
 
 export default function Page() {
   const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
