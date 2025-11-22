@@ -1,17 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUserAuth } from "../../contexts/AuthContext";
+import { getItems, addItem } from "../_services/shopping-list-service";
 
 import ItemList from "./item-list";
 import NewItem from "./new-item";
-import itemsData from "./items.json";
 import MealIdeas from "./meal-ideas";
 import Link from "next/link";
 
 export default function Page() {
   const { user, firebaseSignOut } = useUserAuth();
-  const [items, setItems] = useState(itemsData);
+  const [items, setItems] = useState([]);
   const [selectedItemName, setSelectedItemName] = useState("");
+
+  async function loadItems() {
+    if (user) {
+      const userItems = await getItems(user.uid);
+      setItems(userItems);
+    }
+  }
+
+  useEffect(() => {
+    loadItems();
+  }, [user]);
 
   if (!user) {
     return (
@@ -20,7 +31,7 @@ export default function Page() {
         <p className="text-lg text-gray-300">
           Please log in to view your shopping list.
         </p>
-        <Link href="/week-9" className="mt-4 text-blue-500 underline">
+        <Link href="/week-10" className="mt-4 text-blue-500 underline">
           Go to Sign In Page
         </Link>
       </main>
@@ -40,8 +51,10 @@ export default function Page() {
     setSelectedItemName(cleanName);
   }
 
-  function handleAddItem(item) {
-    setItems((currentItems) => [...currentItems, item]);
+  async function handleAddItem(item) {
+    const newItemId = await addItem(user.uid, item);
+    const newItem = { id: newItemId, ...item };
+    setItems((currentItems) => [...currentItems, newItem]);
   }
 
   const handleSignOut = async () => {
